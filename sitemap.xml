@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO: заменить https://juliegordeeva.github.io/SITE-PDC на итоговый SITE_URL -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://juliegordeeva.github.io/SITE-PDC/</loc></url>
+  <url><loc>https://juliegordeeva.github.io/SITE-PDC/services.html</loc></url>
+  <url><loc>https://juliegordeeva.github.io/SITE-PDC/diagnostics.html</loc></url>
+  <url><loc>https://juliegordeeva.github.io/SITE-PDC/programs.html</loc></url>
+  <url><loc>https://juliegordeeva.github.io/SITE-PDC/team.html</loc></url>
+  <url><loc>https://juliegordeeva.github.io/SITE-PDC/contacts.html</loc></url>
+  <url><loc>https://juliegordeeva.github.io/SITE-PDC/privacy.html</loc></url>
+  <url><loc>https://juliegordeeva.github.io/SITE-PDC/consent.html</loc></url>
+</urlset>
