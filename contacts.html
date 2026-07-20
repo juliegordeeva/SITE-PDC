@@ -80,9 +80,63 @@
             <p><a href="https://yandex.ru/maps/?text=Москва,%20ул.%20Большая%20Молчановка,%2012,%20стр.%201" rel="noopener noreferrer" target="_blank">Построить маршрут</a></p>
           </article>
         </div>
-        <div class="note">
-          <p>Формы обратной связи на сайте нет: GitHub Pages не обрабатывает заявки на сервере. Для обращения используйте Telegram, телефон или email.</p>
+      </div>
+    </section>
+
+    <section class="section" id="form" aria-labelledby="form-title">
+      <div class="container form-wrap">
+        <div class="section-intro">
+          <h2 id="form-title">Оставить заявку</h2>
+          <p>Кратко опишите запрос. Кнопка откроет ваш почтовый клиент с готовым письмом на адрес службы — без отправки данных в таблицы и сторонние формы.</p>
         </div>
+
+        <!-- mailto-агент: заявка уходит через почтовый клиент пользователя, не через таблицу/CRM -->
+        <form class="contact-form" id="leadForm" novalidate>
+          <div class="form-row">
+            <label for="name">Имя</label>
+            <input type="text" id="name" name="name" placeholder="Ваше имя" required autocomplete="name">
+          </div>
+          <div class="form-row">
+            <label for="phone">Телефон</label>
+            <input type="tel" id="phone" name="phone" placeholder="+7 …" required autocomplete="tel">
+          </div>
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+          </div>
+          <div class="form-row">
+            <label for="message">Кратко о запросе <span class="optional">(необязательно)</span></label>
+            <textarea id="message" name="message" rows="4" placeholder="С чем хотите обратиться"></textarea>
+          </div>
+
+          <div class="form-row form-checkbox">
+            <label class="checkbox-label">
+              <input type="checkbox" id="consent-pd" required>
+              <span>
+                Даю согласие на обработку персональных данных в соответствии с
+                <a href="consent.html" target="_blank" rel="noopener noreferrer">Согласием</a>
+                и
+                <a href="privacy.html" target="_blank" rel="noopener noreferrer">Политикой обработки персональных данных</a>
+              </span>
+            </label>
+          </div>
+
+          <div class="form-row form-checkbox">
+            <label class="checkbox-label">
+              <input type="checkbox" id="consent-news">
+              <span>Хочу получать новости и полезные материалы</span>
+            </label>
+          </div>
+
+          <button class="btn btn-primary" type="submit">Оставить заявку</button>
+          <p class="form-fallback">
+            Кнопка откроет ваш почтовый клиент с готовым письмом. Если этого не произошло — напишите на
+            <a href="mailto:sar.romanchenko@gmail.com">sar.romanchenko@gmail.com</a>
+            или в
+            <a href="https://t.me/Swetlana_Romanchenko" rel="noopener noreferrer" target="_blank">Telegram</a>.
+          </p>
+          <p class="form-status" id="form-status" role="status" hidden></p>
+        </form>
       </div>
     </section>
   </main>
@@ -116,9 +170,9 @@
       <div class="footer-bottom">
         <p>© <span data-year>2026</span> Психология и развитие</p>
         <p>
-          <a href="privacy.html">Политика конфиденциальности</a>
+          <a href="privacy.html">Политика обработки персональных данных</a>
           ·
-          <a href="consent.html">Согласие на обработку данных</a>
+          <a href="consent.html">Согласие на обработку персональных данных</a>
         </p>
       </div>
     </div>
