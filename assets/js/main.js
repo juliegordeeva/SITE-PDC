@@ -223,4 +223,36 @@
       window.location.href = next;
     }
   });
+
+  const filterButtons = document.querySelectorAll(".article-filter");
+  const articleCards = document.querySelectorAll(".article-card[data-author]");
+  const articlesEmpty = document.querySelector("[data-articles-empty]");
+
+  const applyAuthorFilter = (author) => {
+    let visible = 0;
+    articleCards.forEach((card) => {
+      const match = author === "all" || card.getAttribute("data-author") === author;
+      card.hidden = !match;
+      if (match) visible += 1;
+    });
+    filterButtons.forEach((btn) => {
+      btn.classList.toggle("is-active", btn.getAttribute("data-author-filter") === author);
+    });
+    if (articlesEmpty) articlesEmpty.hidden = visible > 0;
+  };
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      applyAuthorFilter(btn.getAttribute("data-author-filter") || "all");
+    });
+  });
+
+  document.querySelectorAll("[data-author-filter]").forEach((el) => {
+    if (el.matches("button.article-filter")) return;
+    el.addEventListener("click", () => {
+      const author = el.getAttribute("data-author-filter");
+      if (!author || !articleCards.length) return;
+      applyAuthorFilter(author);
+    });
+  });
 })();
