@@ -1160,6 +1160,13 @@ p {
   margin-bottom: var(--space-3);
 }
 
+.footer-note {
+  margin: var(--space-3) 0 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.62);
+}
+
 .footer-title {
   color: #fff;
   font-size: 0.95rem;
@@ -1239,8 +1246,14 @@ p {
   color: var(--color-muted);
 }
 
+.contact-terms {
+  margin: var(--space-5) 0 0;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
 .emergency-note {
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
   font-size: 0.95rem;
   color: var(--color-muted);
 }
