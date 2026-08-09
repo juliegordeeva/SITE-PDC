@@ -92,4 +92,135 @@
 
     img.addEventListener("error", markFailed);
   });
+
+  const CONSENT_PD_KEY = "pdc-consent-pd";
+  const CONSENT_MARKETING_KEY = "pdc-consent-marketing";
+
+  const getConsentPd = () => sessionStorage.getItem(CONSENT_PD_KEY) === "1";
+  const getConsentMarketing = () => sessionStorage.getItem(CONSENT_MARKETING_KEY) === "1";
+
+  const setConsentPd = (value) => {
+    sessionStorage.setItem(CONSENT_PD_KEY, value ? "1" : "0");
+  };
+
+  const setConsentMarketing = (value) => {
+    sessionStorage.setItem(CONSENT_MARKETING_KEY, value ? "1" : "0");
+  };
+
+  const contactsWriteUrl = (() => {
+    const path = window.location.pathname || "";
+    if (path.endsWith("contacts.html") || path.endsWith("/contacts")) return "#write";
+    if (path.includes("/") && !path.endsWith("/") && path.split("/").pop()?.includes(".")) {
+      return "contacts.html#write";
+    }
+    return "contacts.html#write";
+  })();
+
+  const withMarketingParams = (href, marketing) => {
+    if (!marketing) return href;
+
+    try {
+      if (href.startsWith("mailto:")) {
+        const [base, query = ""] = href.split("?");
+        const params = new URLSearchParams(query);
+        const body = params.get("body") || "";
+        const note = "Согласен(а) на рассылку информационных материалов.";
+        params.set("body", body ? `${body}\n\n${note}` : note);
+        return `${base}?${params.toString()}`;
+      }
+
+      if (href.includes("t.me/")) {
+        const url = new URL(href);
+        const text = url.searchParams.get("text") || "";
+        const note = "Здравствуйте! Пишу с сайта. Согласен(а) на рассылку информационных материалов.";
+        url.searchParams.set("text", text ? `${text}\n\n${note}` : note);
+        return url.toString();
+      }
+    } catch (_) {
+      return href;
+    }
+
+    return href;
+  };
+
+  const syncGate = (gate) => {
+    const required = gate.querySelector("[data-consent-required]");
+    const marketing = gate.querySelector("[data-consent-marketing]");
+    const hint = gate.querySelector("[data-consent-hint]");
+    const allowed = Boolean(required?.checked);
+
+    if (required) setConsentPd(required.checked);
+    if (marketing) setConsentMarketing(marketing.checked);
+
+    gate.querySelectorAll("[data-consent-action]").forEach((action) => {
+      action.classList.toggle("is-consent-disabled", !allowed);
+      action.setAttribute("aria-disabled", allowed ? "false" : "true");
+      if (allowed) {
+        action.removeAttribute("tabindex");
+      } else {
+        action.setAttribute("tabindex", "-1");
+      }
+    });
+
+    if (hint) hint.hidden = allowed;
+  };
+
+  document.querySelectorAll("[data-consent-gate]").forEach((gate) => {
+    const required = gate.querySelector("[data-consent-required]");
+    const marketing = gate.querySelector("[data-consent-marketing]");
+
+    if (required) required.checked = getConsentPd();
+    if (marketing) marketing.checked = getConsentMarketing();
+
+    syncGate(gate);
+
+    gate.addEventListener("change", (event) => {
+      if (!(event.target instanceof HTMLInputElement)) return;
+      syncGate(gate);
+      document.querySelectorAll("[data-consent-gate]").forEach((other) => {
+        if (other === gate) return;
+        const otherRequired = other.querySelector("[data-consent-required]");
+        const otherMarketing = other.querySelector("[data-consent-marketing]");
+        if (otherRequired) otherRequired.checked = getConsentPd();
+        if (otherMarketing) otherMarketing.checked = getConsentMarketing();
+        syncGate(other);
+      });
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    const action = event.target.closest("a[data-consent-action], a[href*='t.me/psydevcenter'], a[href^='mailto:']");
+    if (!(action instanceof HTMLAnchorElement)) return;
+    if (action.closest(".footer-bottom, .policy, .legal, .consent-lead")) return;
+
+    const isTelegram = action.href.includes("t.me/psydevcenter");
+    const isEmail = action.getAttribute("href")?.startsWith("mailto:") || action.href.startsWith("mailto:");
+    if (!isTelegram && !isEmail && !action.hasAttribute("data-consent-action")) return;
+
+    const gate = action.closest("[data-consent-gate]");
+
+    if (!getConsentPd()) {
+      event.preventDefault();
+      if (gate) {
+        const hint = gate.querySelector("[data-consent-hint]");
+        if (hint) hint.hidden = false;
+        gate.querySelector(".consent-panel")?.scrollIntoView({ behavior: "smooth", block: "center" });
+        gate.querySelector("[data-consent-required]")?.focus();
+        return;
+      }
+      window.location.href = contactsWriteUrl;
+      return;
+    }
+
+    const rawHref = action.getAttribute("href") || action.href;
+    const next = withMarketingParams(rawHref, getConsentMarketing());
+    if (next === rawHref) return;
+
+    event.preventDefault();
+    if (action.target === "_blank") {
+      window.open(next, "_blank", "noopener,noreferrer");
+    } else {
+      window.location.href = next;
+    }
+  });
 })();
