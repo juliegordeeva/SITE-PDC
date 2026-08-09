@@ -402,6 +402,26 @@ main {
   color: #fff;
 }
 
+.section-dark .btn-on-dark {
+  background: #fff;
+  color: var(--color-accent-dark);
+}
+
+.section-dark .btn-on-dark:hover,
+.section-dark .btn-on-dark:focus-visible {
+  background: var(--color-cream);
+  color: var(--color-accent-dark);
+}
+
+.section-dark .btn-on-dark-outline {
+  color: #fff;
+}
+
+.section-dark .btn-on-dark-outline:hover,
+.section-dark .btn-on-dark-outline:focus-visible {
+  color: #fff;
+}
+
 .section-intro {
   max-width: 40rem;
   margin-bottom: var(--space-6);
@@ -1473,5 +1493,21 @@ a.is-consent-disabled {
 
   .btn-group .btn {
     width: 100%;
+    justify-content: center;
+    min-height: 2.875rem;
+  }
+
+  .consent-panel {
+    padding: var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+
+  .consent-check {
+    padding: var(--space-3);
+    font-size: 0.92rem;
+  }
+
+  .consent-panel-on-dark {
+    max-width: none;
   }
 }
