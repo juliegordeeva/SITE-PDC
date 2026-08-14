@@ -116,24 +116,28 @@
     return "contacts.html#write";
   })();
 
-  const withMarketingParams = (href, marketing) => {
-    if (!marketing) return href;
+  const consentNotes = (marketing) => {
+    const lines = ["Подтверждаю согласие на обработку персональных данных."];
+    if (marketing) lines.push("Согласен(а) на рассылку информационных материалов.");
+    return lines.join("\n");
+  };
+
+  const withConsentParams = (href, marketing) => {
+    const notes = consentNotes(marketing);
 
     try {
       if (href.startsWith("mailto:")) {
         const [base, query = ""] = href.split("?");
         const params = new URLSearchParams(query);
         const body = params.get("body") || "";
-        const note = "Согласен(а) на рассылку информационных материалов.";
-        params.set("body", body ? `${body}\n\n${note}` : note);
+        params.set("body", body ? `${body}\n\n${notes}` : notes);
         return `${base}?${params.toString()}`;
       }
 
       if (href.includes("t.me/")) {
         const url = new URL(href);
-        const text = url.searchParams.get("text") || "";
-        const note = "Здравствуйте! Пишу с сайта. Согласен(а) на рассылку информационных материалов.";
-        url.searchParams.set("text", text ? `${text}\n\n${note}` : note);
+        const text = url.searchParams.get("text") || "Здравствуйте! Пишу с сайта.";
+        url.searchParams.set("text", `${text}\n\n${notes}`);
         return url.toString();
       }
     } catch (_) {
@@ -195,7 +199,7 @@
   document.addEventListener("click", (event) => {
     const action = event.target.closest("a[data-consent-action], a[href*='t.me/psydevcenter'], a[href^='mailto:']");
     if (!(action instanceof HTMLAnchorElement)) return;
-    if (action.closest(".footer-bottom, .policy, .legal, .consent-lead, .rules-doc")) return;
+    if (action.closest(".footer-bottom, .policy, .legal, .consent-lead")) return;
 
     const isTelegram = action.href.includes("t.me/psydevcenter");
     const isEmail = action.getAttribute("href")?.startsWith("mailto:") || action.href.startsWith("mailto:");
@@ -217,7 +221,7 @@
     }
 
     const rawHref = action.getAttribute("href") || action.href;
-    const next = withMarketingParams(rawHref, getConsentMarketing());
+    const next = withConsentParams(rawHref, getConsentMarketing());
     if (next === rawHref) return;
 
     event.preventDefault();
