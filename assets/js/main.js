@@ -185,13 +185,17 @@
         if (otherMarketing) otherMarketing.checked = getConsentMarketing();
         syncGate(other);
       });
+
+      if (gate.hasAttribute("data-rules-gate") && event.target.hasAttribute("data-consent-required") && event.target.checked) {
+        gate.querySelector("[data-rules-doc]")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     });
   });
 
   document.addEventListener("click", (event) => {
     const action = event.target.closest("a[data-consent-action], a[href*='t.me/psydevcenter'], a[href^='mailto:']");
     if (!(action instanceof HTMLAnchorElement)) return;
-    if (action.closest(".footer-bottom, .policy, .legal, .consent-lead")) return;
+    if (action.closest(".footer-bottom, .policy, .legal, .consent-lead, .rules-doc")) return;
 
     const isTelegram = action.href.includes("t.me/psydevcenter");
     const isEmail = action.getAttribute("href")?.startsWith("mailto:") || action.href.startsWith("mailto:");
