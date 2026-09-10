@@ -886,6 +886,15 @@ p {
   text-align: left;
 }
 
+.person-card ul {
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.25rem;
+}
+
+.person-card li + li {
+  margin-top: 0.4rem;
+}
+
 .person-photo {
   position: relative;
   aspect-ratio: 1;
