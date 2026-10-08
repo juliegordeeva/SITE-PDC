@@ -284,7 +284,7 @@
       border: 1px solid var(--sand);
     }
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 720px) {
       .sheet {
         width: auto;
         min-height: auto;
@@ -329,6 +329,11 @@
         page-break-after: avoid;
         page-break-inside: avoid;
       }
+      .filmstrip { grid-template-columns: 1fr 1fr 1fr; }
+      .info-row { grid-template-columns: 1fr 1.15fr 0.85fr; }
+      .services { grid-template-columns: 1fr 1fr; }
+      .contacts { grid-template-columns: 1.1fr 1fr; }
+      .film-frame { aspect-ratio: 4 / 3; }
     }
   </style>
 </head>
