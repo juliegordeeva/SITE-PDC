@@ -116,6 +116,7 @@
     }
 
     .film-frame {
+      position: relative;
       width: 100%;
       margin: 0;
       overflow: hidden;
@@ -128,10 +129,29 @@
     .film-frame img {
       display: block;
       width: 100%;
+      min-width: 100%;
+      max-width: none;
       height: auto;
       aspect-ratio: 1 / 1;
       object-fit: cover;
-      object-position: center 10%;
+      object-position: center;
+    }
+
+    .film-frame--mid {
+      aspect-ratio: 1 / 1;
+      background: #6a3619 url("assets/images/brochure/brochure-mid.jpg") center 8% / cover no-repeat;
+    }
+
+    .film-frame--mid img {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+      opacity: 0;
     }
 
     .info-row {
@@ -364,8 +384,8 @@
       <figure class="film-frame">
         <img src="assets/images/brochure/brochure-01.jpg" alt="Работа с детьми в центре" width="1200" height="799">
       </figure>
-      <figure class="film-frame">
-        <img src="assets/images/brochure/brochure-02.jpg?v=14" alt="Индивидуальная консультация" width="1100" height="1100">
+      <figure class="film-frame film-frame--mid" role="img" aria-label="Индивидуальная консультация">
+        <img src="assets/images/brochure/brochure-mid.jpg" alt="Индивидуальная консультация" width="1200" height="1200">
       </figure>
       <figure class="film-frame">
         <img src="assets/images/brochure/brochure-03.jpg" alt="Семейная консультация" width="1200" height="1138">
