@@ -135,6 +135,12 @@
       display: block;
     }
 
+    .film-frame--portrait img {
+      object-fit: contain;
+      object-position: center center;
+      background: #1a1512;
+    }
+
     .info-row {
       display: grid;
       grid-template-columns: 1fr 1.15fr 0.85fr;
@@ -364,8 +370,8 @@
       <figure class="film-frame">
         <img src="assets/images/brochure/brochure-01.jpg" alt="Работа с детьми в центре" width="1200" height="799">
       </figure>
-      <figure class="film-frame">
-        <img src="assets/images/brochure/brochure-02.jpg?v=10" alt="Индивидуальная консультация" width="1100" height="1100">
+      <figure class="film-frame film-frame--portrait">
+        <img src="assets/images/brochure/brochure-02.jpg?v=11" alt="Индивидуальная консультация" width="900" height="1274">
       </figure>
       <figure class="film-frame">
         <img src="assets/images/brochure/brochure-03.jpg" alt="Семейная консультация" width="1200" height="1138">
